@@ -6,6 +6,8 @@ const portalDeliverables = [
   {
     icon: Bot,
     title: "Henry (AI Layer)",
+    stat: "60%",
+    statContext: "of mental health crises occur outside business hours",
     items: [
       "24/7 availability",
       "AI-guided check-ins",
@@ -16,6 +18,8 @@ const portalDeliverables = [
   {
     icon: Heart,
     title: "Coaching Layer",
+    stat: "75%",
+    statContext: "of employees report mental health challenges—most don't need clinical care",
     items: [
       "Daily human support",
       "Goal setting & accountability",
@@ -26,6 +30,8 @@ const portalDeliverables = [
   {
     icon: Stethoscope,
     title: "Therapy Layer",
+    stat: "48+",
+    statContext: "day average wait for a therapist in the U.S.",
     items: [
       "Licensed clinical care",
       "CBT, DBT, EMDR, trauma",
@@ -71,10 +77,10 @@ const PlatformOverview = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-bronze-400 to-bronze-600 bg-clip-text text-transparent">
-            What Each Portal Delivers
+            Addressing Documented Gaps
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Three integrated service layers working together on a single platform.
+            Mental health demand has outpaced traditional infrastructure. Each layer addresses a specific, documented gap.
           </p>
         </motion.div>
 
@@ -88,11 +94,29 @@ const PlatformOverview = () => {
               transition={{ duration: 0.5, delay: 0.1 * idx }}
             >
               <Card className="h-full p-6 bg-card border-border/50 hover:border-bronze-500/30 transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-bronze-500/20 to-bronze-600/10 flex items-center justify-center mb-5">
-                  <portal.icon className="w-6 h-6 text-bronze-400" />
+                {/* Lead Statistic */}
+                <div className="mb-5 pb-5 border-b border-border/30">
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="text-4xl font-bold bg-gradient-to-r from-bronze-400 to-bronze-500 bg-clip-text text-transparent">
+                      {portal.stat}
+                    </span>
+                    {portal.title === "Therapy Layer" && (
+                      <span className="text-xl font-bold text-bronze-400">days</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-snug">
+                    {portal.statContext}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-4">{portal.title}</h3>
-                <ul className="space-y-2.5">
+                
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-bronze-500/20 to-bronze-600/10 flex items-center justify-center">
+                    <portal.icon className="w-5 h-5 text-bronze-400" />
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground">{portal.title}</h3>
+                </div>
+                
+                <ul className="space-y-2">
                   {portal.items.map((item, itemIdx) => (
                     <li key={itemIdx} className="flex items-start gap-2.5">
                       <div className="w-1.5 h-1.5 rounded-full bg-bronze-500 mt-2 flex-shrink-0" />
