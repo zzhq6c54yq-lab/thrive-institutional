@@ -75,12 +75,12 @@ const SiteFooter = () => {
             <h4 className="font-semibold text-white mb-4 text-sm tracking-wide uppercase">Platform</h4>
             <ul className="space-y-2.5 text-sm" role="list">
               <li>
-                <Link to="/about" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/the-app" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   The App
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/what-we-offer" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   What We Offer
                 </Link>
               </li>
@@ -129,22 +129,22 @@ const SiteFooter = () => {
             <h4 className="font-semibold text-white mb-4 text-sm tracking-wide uppercase">Deployments</h4>
             <ul className="space-y-2.5 text-sm" role="list">
               <li>
-                <Link to="/sectors/military" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/home#deployment-models" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   Military & Veterans
                 </Link>
               </li>
               <li>
-                <Link to="/sectors/college" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/home#deployment-models" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   College Experience
                 </Link>
               </li>
               <li>
-                <Link to="/sectors/business" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/home#deployment-models" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   Small Business
                 </Link>
               </li>
               <li>
-                <Link to="/sectors/responders" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/home#deployment-models" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   First Responders
                 </Link>
               </li>
@@ -171,7 +171,7 @@ const SiteFooter = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/security" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
+                <Link to="/home#compliance" className="text-white/50 hover:text-bronze-400 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500/50 rounded-sm">
                   Security
                 </Link>
               </li>
