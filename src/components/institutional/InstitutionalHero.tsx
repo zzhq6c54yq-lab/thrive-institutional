@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Calendar, Users, Clock, Shield, TrendingUp } from "lucide-react";
+import { ArrowDown, Calendar, Clock, Shield, Layers, Layout } from "lucide-react";
 
 const CALENDLY_PLACEHOLDER = "https://calendly.com/thrivemt/demo";
 
 const stats = [
-  { icon: Users, value: "50K+", label: "Lives Supported" },
   { icon: Clock, value: "24/7", label: "Availability" },
   { icon: Shield, value: "100%", label: "HIPAA Compliant" },
-  { icon: TrendingUp, value: "40%", label: "Cost Reduction" },
+  { icon: Layers, value: "3-Layer", label: "Care Model" },
+  { icon: Layout, value: "Unified", label: "Platform" },
 ];
 
 const InstitutionalHero = () => {
