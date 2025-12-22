@@ -17,11 +17,11 @@ const SiteEntry = () => {
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStage(1), 300),    // "ThriveMT" fades in
-      setTimeout(() => setStage(2), 1500),   // Logo fades in
-      setTimeout(() => setStage(3), 2800),   // Headline fades in
-      setTimeout(() => setStage(4), 4000),   // Tagline fades in
-      setTimeout(() => setStage(5), 5000),   // Trust indicators + buttons
+      setTimeout(() => setStage(1), 150),    // "ThriveMT" fades in - faster
+      setTimeout(() => setStage(2), 600),    // Logo fades in - faster
+      setTimeout(() => setStage(3), 1200),   // Headline fades in - faster
+      setTimeout(() => setStage(4), 1800),   // Tagline fades in - faster
+      setTimeout(() => setStage(5), 2300),   // Trust indicators + buttons - faster
     ];
     
     return () => timers.forEach(clearTimeout);
@@ -52,22 +52,22 @@ const SiteEntry = () => {
       {/* Main content */}
       <div className="relative z-10 flex flex-col items-center justify-center gap-6 px-6 max-w-4xl mx-auto">
         
-        {/* ThriveMT Text Logo */}
+        {/* ThriveMT Text Logo - Larger & More Impactful */}
         <div className="relative flex items-baseline gap-0">
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: stage >= 1 ? 1 : 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="text-5xl md:text-7xl font-bold tracking-tight text-white"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: stage >= 1 ? 1 : 0, scale: stage >= 1 ? 1 : 0.9 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white"
           >
             Thrive
           </motion.span>
 
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: stage >= 1 ? 1 : 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mt-glow"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: stage >= 1 ? 1 : 0, scale: stage >= 1 ? 1 : 0.9 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight mt-glow"
             style={{
               background: 'linear-gradient(135deg, #B87333 0%, #D4A574 50%, #D4AF37 100%)',
               WebkitBackgroundClip: 'text',
@@ -104,12 +104,12 @@ const SiteEntry = () => {
           <div className="orbit-dot dot-6"></div>
         </motion.div>
 
-        {/* Institutional Headline */}
+        {/* Institutional Headline - Larger & Bolder */}
         <motion.h1
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: stage >= 3 ? 1 : 0, y: stage >= 3 ? 0 : 10 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-2xl md:text-4xl font-bold text-center leading-tight tracking-tight"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: stage >= 3 ? 1 : 0, y: stage >= 3 ? 0 : 15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-3xl md:text-5xl lg:text-6xl font-bold text-center leading-tight tracking-tight"
           style={{
             background: 'linear-gradient(135deg, #FFFFFF 0%, #E8D4C0 40%, #D4A574 100%)',
             WebkitBackgroundClip: 'text',
@@ -120,31 +120,36 @@ const SiteEntry = () => {
           Institutional Mental Health Infrastructure
         </motion.h1>
 
-        {/* Tagline */}
+        {/* Tagline - Larger */}
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: stage >= 4 ? 1 : 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-lg md:text-xl text-white/60 font-medium tracking-wide text-center"
+          initial={{ opacity: 0, letterSpacing: '0.3em' }}
+          animate={{ opacity: stage >= 4 ? 1 : 0, letterSpacing: stage >= 4 ? '0.25em' : '0.3em' }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-xl md:text-2xl lg:text-3xl text-white/70 font-semibold tracking-widest text-center uppercase"
         >
           Scalable. Compliant. Measurable.
         </motion.p>
 
-        {/* Trust Indicators */}
+        {/* Trust Indicators - Larger & Animated */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: stage >= 5 ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: stage >= 5 ? 1 : 0, y: stage >= 5 ? 0 : 10 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mt-4"
         >
           {trustIndicators.map((item, idx) => (
-            <div 
+            <motion.div 
               key={idx} 
-              className="flex items-center gap-2 text-white/40 text-sm"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: stage >= 5 ? 1 : 0, scale: stage >= 5 ? 1 : 0.8 }}
+              transition={{ duration: 0.3, delay: idx * 0.1, ease: "easeOut" }}
+              className="flex items-center gap-3 text-white/60 text-base md:text-lg trust-indicator"
             >
-              <item.icon className="w-4 h-4 text-bronze-500" />
-              <span>{item.label}</span>
-            </div>
+              <div className="p-2 rounded-lg bg-bronze-500/10 border border-bronze-500/20">
+                <item.icon className="w-5 h-5 md:w-6 md:h-6 text-bronze-400" />
+              </div>
+              <span className="font-medium">{item.label}</span>
+            </motion.div>
           ))}
         </motion.div>
 
