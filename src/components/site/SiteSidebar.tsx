@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import thriveOutlineLogoImage from "@/assets/thrivemt-outline-logo.png";
+import { useDeployment } from "@/contexts/DeploymentContext";
 
 interface SiteSidebarProps {
   collapsed?: boolean;
@@ -56,17 +57,22 @@ const deploymentItems = [
 
 const SiteSidebar = ({ collapsed = false, isOpen = false, onClose }: SiteSidebarProps) => {
   const location = useLocation();
+  const { activePopulation, setActivePopulationById } = useDeployment();
 
-  const scrollToDeployment = (deploymentId: string) => {
-    if (location.pathname !== "/home") {
+  const handleDeploymentClick = (deploymentId: string) => {
+    // Set the active population
+    setActivePopulationById(deploymentId);
+    
+    // Navigate to home and scroll to deployments section if not already there
+    if (location.pathname !== "/home" && location.pathname !== "/") {
       window.location.href = `/home#deployment-models`;
-      return;
+    } else {
+      const element = document.getElementById("deployment-models");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
     
-    const element = document.getElementById("deployment-models");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
     if (onClose) onClose();
   };
 
@@ -141,16 +147,24 @@ const SiteSidebar = ({ collapsed = false, isOpen = false, onClose }: SiteSidebar
           )}
           
           <div className="space-y-0.5">
-            {deploymentItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToDeployment(item.id)}
-                className="w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
-              >
-                <item.icon className="w-4 h-4" />
-                {!collapsed && <span className="font-medium text-xs">{item.label}</span>}
-              </button>
-            ))}
+            {deploymentItems.map((item) => {
+              const isActive = activePopulation.id === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleDeploymentClick(item.id)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors",
+                    isActive 
+                      ? "bg-bronze-500/15 text-bronze-400 border-l-2 border-bronze-500" 
+                      : "text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
+                  )}
+                >
+                  <item.icon className={cn("w-4 h-4", isActive && "text-bronze-400")} />
+                  {!collapsed && <span className={cn("font-medium text-xs", isActive && "font-semibold")}>{item.label}</span>}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

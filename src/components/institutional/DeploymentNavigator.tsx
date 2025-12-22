@@ -1,15 +1,9 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { deploymentPopulations, DeploymentPopulation } from "@/data/deploymentPopulations";
 import { cn } from "@/lib/utils";
-import { Check, ArrowRight, ChevronDown } from "lucide-react";
-import { useIsMobileOrTablet } from "@/hooks/use-mobile";
+import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { useDeployment } from "@/contexts/DeploymentContext";
 
 const StatCard = ({ stat }: { stat: { value: string; suffix?: string; context: string } }) => (
   <div className="bg-gradient-to-br from-bronze-500/10 to-bronze-600/5 border border-bronze-500/20 rounded-xl p-4 text-center">
@@ -132,116 +126,12 @@ const PopulationContent = ({ population }: { population: DeploymentPopulation })
   </div>
 );
 
-const MobilePopulationAccordion = () => {
-  const [openId, setOpenId] = useState<string | null>(deploymentPopulations[0].id);
-
-  return (
-    <div className="space-y-3">
-      {deploymentPopulations.map((population) => {
-        const isOpen = openId === population.id;
-        return (
-          <Collapsible
-            key={population.id}
-            open={isOpen}
-            onOpenChange={(open) => setOpenId(open ? population.id : null)}
-          >
-            <CollapsibleTrigger asChild>
-              <button
-                className={cn(
-                  "w-full flex items-center justify-between gap-3 px-4 py-4 rounded-xl text-left transition-all duration-200 border",
-                  isOpen
-                    ? "bg-bronze-500/15 text-bronze-400 border-bronze-500/30"
-                    : "bg-card/30 text-foreground border-border/50 hover:bg-card/50"
-                )}
-              >
-                <div className="flex items-center gap-3">
-                  <population.icon className={cn("w-5 h-5 flex-shrink-0", isOpen ? "text-bronze-400" : "text-muted-foreground")} />
-                  <span className="font-medium">{population.name}</span>
-                </div>
-                <ChevronDown 
-                  className={cn(
-                    "w-5 h-5 transition-transform duration-200",
-                    isOpen ? "rotate-180 text-bronze-400" : "text-muted-foreground"
-                  )} 
-                />
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                className="mt-3 p-5 rounded-xl border border-border/50 bg-card/30"
-              >
-                <PopulationContent population={population} />
-              </motion.div>
-            </CollapsibleContent>
-          </Collapsible>
-        );
-      })}
-    </div>
-  );
-};
-
-const DesktopNavigator = () => {
-  const [activePopulation, setActivePopulation] = useState<DeploymentPopulation>(
-    deploymentPopulations[0]
-  );
-
-  return (
-    <div className="flex gap-6">
-      {/* Left Navigation */}
-      <div className="w-72 xl:w-80 flex-shrink-0">
-        <div className="sticky top-24 space-y-1 p-4 rounded-xl border border-border/50 bg-card/30 max-h-[75vh] overflow-y-auto">
-          <div className="text-xs font-bold text-muted-foreground mb-3 px-3 uppercase tracking-wider">
-            Deployments by Population
-          </div>
-          {deploymentPopulations.map((population) => {
-            const isActive = activePopulation.id === population.id;
-            return (
-              <button
-                key={population.id}
-                onClick={() => setActivePopulation(population)}
-                className={cn(
-                  "w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-all duration-200",
-                  isActive
-                    ? "bg-bronze-500/15 text-bronze-400 border-l-2 border-bronze-500"
-                    : "text-muted-foreground hover:text-foreground hover:bg-card/50"
-                )}
-              >
-                <population.icon className={cn("w-5 h-5 flex-shrink-0", isActive ? "text-bronze-400" : "")} />
-                <span className="font-medium text-sm">{population.name}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Right Content Pane */}
-      <div className="flex-1 min-w-0">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activePopulation.id}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="p-6 xl:p-8 rounded-xl border border-border/50 bg-card/30"
-          >
-            <PopulationContent population={activePopulation} />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-};
-
 const DeploymentNavigator = () => {
-  const isMobileOrTablet = useIsMobileOrTablet();
+  const { activePopulation } = useDeployment();
 
   return (
     <section id="deployment-models" className="py-16 md:py-20 px-4 md:px-6 bg-background">
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -254,11 +144,23 @@ const DeploymentNavigator = () => {
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-base">
             ThriveMT adapts to the unique mental health challenges of every population. 
-            Explore how we deliver measurable outcomes for your specific institutional context.
+            Select a deployment from the sidebar to see how we deliver measurable outcomes for your specific institutional context.
           </p>
         </motion.div>
 
-        {isMobileOrTablet ? <MobilePopulationAccordion /> : <DesktopNavigator />}
+        {/* Content Pane - No more left sidebar here, controlled by main site sidebar */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activePopulation.id}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+            className="p-6 md:p-8 rounded-xl border border-border/50 bg-card/30"
+          >
+            <PopulationContent population={activePopulation} />
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
