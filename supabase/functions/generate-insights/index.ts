@@ -72,6 +72,6 @@ serve(async (req) => {
     return new Response(JSON.stringify({ success: true, insightsGenerated: insights.length, insights: insights.map(i => i.insight_text) }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
   } catch (error) {
     console.error('[GenerateInsights] Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 });
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 });
   }
 });

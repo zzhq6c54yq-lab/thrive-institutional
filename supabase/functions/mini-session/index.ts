@@ -140,7 +140,7 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error',
         coaching: "I'm experiencing technical difficulties. Please try again, or reach out to your therapist if you need immediate support."
       }),
       {

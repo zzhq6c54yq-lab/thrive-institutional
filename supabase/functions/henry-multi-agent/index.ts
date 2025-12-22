@@ -268,10 +268,10 @@ async function fetchWithRetry(
     } catch (error) {
       clearTimeout(timeout);
       
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         console.error(`[Henry] Attempt ${attempt} timed out after ${timeoutMs}ms`);
       } else {
-        console.error(`[Henry] Attempt ${attempt} failed:`, error.message);
+        console.error(`[Henry] Attempt ${attempt} failed:`, error instanceof Error ? error.message : 'Unknown error');
       }
       
       if (attempt === maxRetries) throw error;
@@ -337,7 +337,7 @@ Core principles:
         console.error('[Henry] Together AI error:', response.status, errorText);
       }
     } catch (error) {
-      console.error('[Henry] Together AI failed after retries:', error.message);
+      console.error('[Henry] Together AI failed after retries:', error instanceof Error ? error.message : 'Unknown error');
     }
   } else {
     console.warn('[Henry] TOGETHER_API_KEY not configured');
@@ -376,7 +376,7 @@ Core principles:
         console.error('[Henry] Lovable AI error:', response.status, errorText);
       }
     } catch (error) {
-      console.error('[Henry] Lovable AI failed after retries:', error.message);
+      console.error('[Henry] Lovable AI failed after retries:', error instanceof Error ? error.message : 'Unknown error');
     }
   } else {
     console.warn('[Henry] LOVABLE_API_KEY not configured');
@@ -521,8 +521,8 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in henry-multi-agent function:', error);
     return new Response(JSON.stringify({ 
-      error: error.message, 
-      response: "I'm experiencing some technical difficulties. Please try again, or if you're in crisis, please call 988." 
+      error: error instanceof Error ? error.message : 'Unknown error', 
+      response: "I'm experiencing some technical difficulties. Please try again, or if you're in crisis, please call 988."
     }), { 
       status: 500, 
       headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
