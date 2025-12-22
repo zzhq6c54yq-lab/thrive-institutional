@@ -15,20 +15,7 @@ interface ContactRequest {
   message: string;
 }
 
-const getRoleEmail = (role?: string): string => {
-  switch (role) {
-    case 'investor':
-      return 'investor@thrive-mental.com';
-    case 'partner':
-    case 'business':
-      return 'business@thrive-mental.com';
-    case 'therapist':
-    case 'coach':
-      return 'hiring@thrive-mental.com';
-    default:
-      return 'support@thrive-mental.com';
-  }
-};
+const CEO_EMAIL = 'damien@thrive-mental.com';
 
 const getRoleLabel = (role?: string): string => {
   switch (role) {
@@ -43,7 +30,7 @@ const getRoleLabel = (role?: string): string => {
     case 'partner':
       return 'Business Partner';
     default:
-      return 'Other';
+      return 'General Inquiry';
   }
 };
 
@@ -57,49 +44,75 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Processing contact form from:", name, email, "role:", role);
 
-    const toEmail = getRoleEmail(role);
     const roleLabel = getRoleLabel(role);
 
-    // Send notification to appropriate team
+    // Send notification directly to CEO
     await resend.emails.send({
-      from: "ThriveMT Contact <noreply@thrive-mental.com>",
-      to: [toEmail],
+      from: "ThriveMT Priority <noreply@thrive-mental.com>",
+      to: [CEO_EMAIL],
       reply_to: email,
-      subject: `New Contact Form Submission - ${name} (${roleLabel})`,
+      subject: `🔔 Direct Inquiry from ${name} (${roleLabel})`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #D4A574 0%, #B87333 100%); padding: 20px; text-align: center;">
-            <h1 style="color: #000; margin: 0;">New Contact Form Submission</h1>
+        <div style="font-family: 'Georgia', serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #D4A574 0%, #B87333 100%); padding: 24px 20px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="color: #000; margin: 0; font-size: 22px; font-weight: 600; letter-spacing: 0.5px;">Priority Message Received</h1>
+            <p style="color: #000; margin: 8px 0 0 0; font-size: 14px; opacity: 0.8;">Direct to CEO Channel</p>
           </div>
-          <div style="padding: 30px; background: #1a1a1a; color: #fff;">
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr>
-                <td style="padding: 10px 0; color: #888;">Name:</td>
-                <td style="padding: 10px 0; color: #fff;"><strong>${name}</strong></td>
-              </tr>
-              <tr>
-                <td style="padding: 10px 0; color: #888;">Email:</td>
-                <td style="padding: 10px 0; color: #fff;"><a href="mailto:${email}" style="color: #D4A574;">${email}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 10px 0; color: #888;">Role:</td>
-                <td style="padding: 10px 0; color: #fff;">${roleLabel}</td>
-              </tr>
-            </table>
-            
-            <h3 style="color: #D4A574; margin-top: 30px;">Message</h3>
-            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; white-space: pre-wrap;">
-              ${message}
+          <div style="padding: 32px; background: #0d0d0d; color: #fff;">
+            <div style="background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(184, 115, 51, 0.1) 100%); border: 1px solid rgba(212, 165, 116, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+              <p style="margin: 0; color: #D4A574; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Sender Profile</p>
+              <h2 style="margin: 8px 0 4px 0; color: #fff; font-size: 20px;">${name}</h2>
+              <p style="margin: 0; color: #888;"><a href="mailto:${email}" style="color: #D4A574; text-decoration: none;">${email}</a></p>
+              <p style="margin: 8px 0 0 0; color: #fff; font-size: 14px;"><strong>Interest:</strong> ${roleLabel}</p>
             </div>
             
-            <div style="margin-top: 20px;">
-              <a href="mailto:${email}" style="display: inline-block; background: linear-gradient(135deg, #D4A574 0%, #B87333 100%); color: #000; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">
-                Reply to ${name}
-              </a>
+            <div style="margin-bottom: 24px;">
+              <p style="margin: 0 0 12px 0; color: #D4A574; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Message</p>
+              <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; border-left: 3px solid #D4A574;">
+                <p style="margin: 0; color: #fff; font-size: 15px; line-height: 1.7; white-space: pre-wrap;">${message}</p>
+              </div>
             </div>
+            
+            <a href="mailto:${email}?subject=Re: Your ThriveMT Inquiry" style="display: inline-block; background: linear-gradient(135deg, #D4A574 0%, #B87333 100%); color: #000; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px;">
+              Respond Directly →
+            </a>
           </div>
-          <div style="padding: 20px; background: #0d0d0d; text-align: center; color: #666; font-size: 12px;">
-            <p>This message was submitted via the ThriveMT contact form</p>
+          <div style="padding: 16px 20px; background: #000; text-align: center; color: #666; font-size: 11px; border-radius: 0 0 8px 8px;">
+            <p style="margin: 0;">ThriveMT Executive Communications • ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          </div>
+        </div>
+      `,
+    });
+
+    // Send confirmation to sender - emphasizing CEO connection
+    await resend.emails.send({
+      from: "ThriveMT <noreply@thrive-mental.com>",
+      to: [email],
+      subject: "Your Message Has Been Received by Our Leadership Team",
+      html: `
+        <div style="font-family: 'Georgia', serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #D4A574 0%, #B87333 100%); padding: 24px 20px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="color: #000; margin: 0; font-size: 22px; font-weight: 600;">Thank You, ${name}</h1>
+          </div>
+          <div style="padding: 32px; background: #0d0d0d; color: #fff;">
+            <p style="font-size: 16px; line-height: 1.7; margin: 0 0 20px 0;">
+              Your message has been received and <strong style="color: #D4A574;">forwarded directly to our CEO, Damien</strong>, for personal review.
+            </p>
+            <p style="font-size: 16px; line-height: 1.7; margin: 0 0 20px 0;">
+              At ThriveMT, we believe every inquiry deserves executive attention. You can expect a thoughtful response within 24-48 business hours.
+            </p>
+            
+            <div style="margin: 28px 0; padding: 20px; background: #1a1a1a; border-radius: 8px; border-left: 3px solid #D4A574;">
+              <p style="margin: 0 0 8px 0; color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Your Message</p>
+              <p style="margin: 0; color: #fff; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${message}</p>
+            </div>
+            
+            <p style="font-size: 14px; color: #888; margin: 0;">
+              In the meantime, explore what we're building at <a href="https://thrive-mental.com" style="color: #D4A574; text-decoration: none;">thrive-mental.com</a>
+            </p>
+          </div>
+          <div style="padding: 16px 20px; background: #000; text-align: center; color: #666; font-size: 11px; border-radius: 0 0 8px 8px;">
+            <p style="margin: 0;">© ${new Date().getFullYear()} ThriveMT • Here for you.</p>
           </div>
         </div>
       `,
