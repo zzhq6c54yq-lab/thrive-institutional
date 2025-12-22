@@ -84,7 +84,7 @@ const PlatformOverview = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+        <div className="flex flex-col md:flex-row gap-6 mb-20">
           {portalDeliverables.map((portal, idx) => (
             <motion.div
               key={portal.title}
@@ -92,6 +92,7 @@ const PlatformOverview = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
+              className="flex-1"
             >
               <Card className="h-full p-6 bg-card border-border/50 hover:border-bronze-500/30 transition-all duration-300">
                 {/* Lead Statistic */}
