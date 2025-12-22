@@ -16,6 +16,7 @@ import SiteInvestors from "@/pages/site/SiteInvestors";
 import SiteAbout from "@/pages/site/SiteAbout";
 import SiteContact from "@/pages/site/SiteContact";
 import SiteApp from "@/pages/site/SiteApp";
+import SiteWhatWeOffer from "@/pages/site/SiteWhatWeOffer";
 import SitePrivacyPolicy from "@/pages/site/SitePrivacyPolicy";
 import SiteTermsOfService from "@/pages/site/SiteTermsOfService";
 import SiteHIPAANotice from "@/pages/site/SiteHIPAANotice";
@@ -45,6 +46,7 @@ function App() {
               <Route path="/about" element={<SiteAbout />} />
               <Route path="/contact" element={<SiteContact />} />
               <Route path="/the-app" element={<SiteApp />} />
+              <Route path="/what-we-offer" element={<SiteWhatWeOffer />} />
               <Route path="/privacy" element={<SitePrivacyPolicy />} />
               <Route path="/terms" element={<SiteTermsOfService />} />
               <Route path="/hipaa" element={<SiteHIPAANotice />} />

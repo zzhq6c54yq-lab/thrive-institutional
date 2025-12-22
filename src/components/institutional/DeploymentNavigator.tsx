@@ -23,7 +23,7 @@ const DeploymentNavigator = () => {
             One Platform. Multiple Institutional Deployments.
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Select a population to see how ThriveMT adapts to meet their specific needs.
+            Select a population to see how ThriveMT addresses their specific challenges.
           </p>
         </motion.div>
 
@@ -100,7 +100,7 @@ const DeploymentNavigator = () => {
                   {/* ThriveMT Deployment */}
                   <div>
                     <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">
-                      ThriveMT Deployment
+                      How ThriveMT Addresses This
                     </h4>
                     <ul className="space-y-3">
                       {activePopulation.deployment.map((item, idx) => (
@@ -112,25 +112,6 @@ const DeploymentNavigator = () => {
                     </ul>
                   </div>
                 </div>
-
-                {/* Pilot Structure (if available) */}
-                {activePopulation.pilotStructure && (
-                  <div className="mt-8 pt-6 border-t border-border/30">
-                    <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">
-                      Pilot Structure
-                    </h4>
-                    <div className="flex flex-wrap gap-3">
-                      {activePopulation.pilotStructure.map((item, idx) => (
-                        <span
-                          key={idx}
-                          className="px-4 py-2 rounded-full bg-bronze-500/10 text-bronze-400 text-sm font-medium border border-bronze-500/20"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </motion.div>
             </AnimatePresence>
           </div>

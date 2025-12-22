@@ -1,25 +1,20 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
-  Home, 
-  Stethoscope, 
-  Heart, 
-  DollarSign, 
-  Play, 
-  Info, 
-  Mail,
   Smartphone,
+  Info,
+  Briefcase,
+  Play,
+  Bot,
+  Mail,
   X,
-  ChevronDown,
-  ChevronRight,
   Shield,
   GraduationCap,
-  Briefcase,
   Siren,
   UtensilsCrossed,
   Truck,
   BookOpen,
   BadgeCheck,
+  Heart,
   Baby,
   Sunset,
   Activity,
@@ -33,6 +28,15 @@ interface SiteSidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
 }
+
+const coreNavItems = [
+  { icon: Smartphone, label: "The App", path: "/the-app" },
+  { icon: Info, label: "About Us", path: "/about" },
+  { icon: Briefcase, label: "What We Offer", path: "/what-we-offer" },
+  { icon: Play, label: "Live Demo", path: "/demo" },
+  { icon: Bot, label: "Meet Henry", path: "/henry" },
+  { icon: Mail, label: "Contact", path: "/contact" },
+];
 
 const deploymentItems = [
   { icon: Shield, label: "Military & Veterans", id: "military-veterans" },
@@ -52,41 +56,8 @@ const deploymentItems = [
 
 const SiteSidebar = ({ collapsed = false, isOpen = false, onClose }: SiteSidebarProps) => {
   const location = useLocation();
-  const [deploymentsExpanded, setDeploymentsExpanded] = useState(false);
-
-  const navSections = [
-    {
-      title: "SERVICES",
-      items: [
-        { icon: Stethoscope, label: "Therapy", path: "/therapy" },
-        { icon: Heart, label: "Coaching", path: "/coaching" },
-        { icon: Play, label: "Meet Henry", path: "/henry" },
-      ]
-    },
-    {
-      title: "PRICING",
-      items: [
-        { icon: DollarSign, label: "Plans", path: "/pricing" },
-      ]
-    },
-    {
-      title: "EXPLORE",
-      items: [
-        { icon: Smartphone, label: "The App", path: "/the-app" },
-        { icon: Play, label: "Live Demo", path: "/demo" },
-      ]
-    },
-    {
-      title: "COMPANY",
-      items: [
-        { icon: Info, label: "About Us", path: "/about" },
-        { icon: Mail, label: "Contact", path: "/contact" },
-      ]
-    }
-  ];
 
   const scrollToDeployment = (deploymentId: string) => {
-    // Navigate to home if not already there
     if (location.pathname !== "/home") {
       window.location.href = `/home#deployment-models`;
       return;
@@ -142,79 +113,45 @@ const SiteSidebar = ({ collapsed = false, isOpen = false, onClose }: SiteSidebar
           )}
         </Link>
 
-        {/* Home Link */}
-        <Link to="/home">
-          <div
-            className={cn(
-              "flex items-center gap-3 px-4 py-3 rounded-lg mb-4 transition-colors",
-              location.pathname === "/home"
-                ? "bg-bronze-500/10 text-bronze-400" 
-                : "text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
-            )}
-          >
-            <Home className="w-5 h-5" />
-            {!collapsed && <span className="font-medium">Home</span>}
-          </div>
-        </Link>
-
-        {/* Navigation Sections */}
-        {navSections.map((section, idx) => (
-          <div key={idx} className="mb-4">
-            {!collapsed && (
-              <div className="text-xs font-bold text-muted-foreground/60 mb-2 px-4 uppercase tracking-wider">
-                {section.title}
+        {/* Core Navigation */}
+        <div className="space-y-1 mb-6">
+          {coreNavItems.map((item) => (
+            <Link key={item.path} to={item.path}>
+              <div
+                className={cn(
+                  "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors",
+                  location.pathname === item.path 
+                    ? "bg-bronze-500/10 text-bronze-400" 
+                    : "text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
+                )}
+              >
+                <item.icon className="w-5 h-5" />
+                {!collapsed && <span className="font-medium text-sm">{item.label}</span>}
               </div>
-            )}
-            <div className="space-y-1">
-              {section.items.map((item) => (
-                <Link key={item.path} to={item.path}>
-                  <div
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors",
-                      location.pathname === item.path 
-                        ? "bg-bronze-500/10 text-bronze-400" 
-                        : "text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
-                    )}
-                  >
-                    <item.icon className="w-5 h-5" />
-                    {!collapsed && <span className="font-medium text-sm">{item.label}</span>}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
+            </Link>
+          ))}
+        </div>
 
-        {/* Deployments Section - Collapsible */}
-        <div className="mb-4">
+        {/* Deployments Section - Always Visible */}
+        <div className="pt-4 border-t border-border/30">
           {!collapsed && (
-            <button
-              onClick={() => setDeploymentsExpanded(!deploymentsExpanded)}
-              className="w-full flex items-center justify-between text-xs font-bold text-muted-foreground/60 mb-2 px-4 uppercase tracking-wider hover:text-bronze-400 transition-colors"
-            >
-              <span>Deployments</span>
-              {deploymentsExpanded ? (
-                <ChevronDown className="w-4 h-4" />
-              ) : (
-                <ChevronRight className="w-4 h-4" />
-              )}
-            </button>
+            <div className="text-xs font-bold text-muted-foreground/60 mb-3 px-4 uppercase tracking-wider">
+              Deployments
+            </div>
           )}
           
-          {deploymentsExpanded && !collapsed && (
-            <div className="space-y-0.5 max-h-64 overflow-y-auto">
-              {deploymentItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToDeployment(item.id)}
-                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
-                >
-                  <item.icon className="w-4 h-4" />
-                  <span className="font-medium text-xs">{item.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="space-y-0.5">
+            {deploymentItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToDeployment(item.id)}
+                className="w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-muted-foreground hover:text-bronze-400 hover:bg-bronze-500/5"
+              >
+                <item.icon className="w-4 h-4" />
+                {!collapsed && <span className="font-medium text-xs">{item.label}</span>}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </aside>
