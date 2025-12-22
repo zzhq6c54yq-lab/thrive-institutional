@@ -1,6 +1,5 @@
 import InstitutionalHero from "@/components/institutional/InstitutionalHero";
 import PlatformOverview from "@/components/institutional/PlatformOverview";
-import HowItWorks from "@/components/institutional/HowItWorks";
 import ComplianceSection from "@/components/institutional/ComplianceSection";
 import DeploymentNavigator from "@/components/institutional/DeploymentNavigator";
 import InstitutionalCTA from "@/components/institutional/InstitutionalCTA";
@@ -18,7 +17,6 @@ const SiteLanding = () => {
       
       <InstitutionalHero />
       <PlatformOverview />
-      <HowItWorks />
       <ComplianceSection />
       <DeploymentNavigator />
       <InstitutionalCTA />
