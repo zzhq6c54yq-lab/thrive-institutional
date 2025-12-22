@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Shield, Clock, Layers } from "lucide-react";
 import headLogo from "@/assets/thrivemt-head-logo.png";
+
+const trustIndicators = [
+  { icon: Shield, label: "HIPAA Compliant" },
+  { icon: Clock, label: "24/7 Availability" },
+  { icon: Layers, label: "3-Layer Model" },
+];
 
 const SiteEntry = () => {
   const navigate = useNavigate();
@@ -12,38 +19,55 @@ const SiteEntry = () => {
     const timers = [
       setTimeout(() => setStage(1), 300),    // "ThriveMT" fades in
       setTimeout(() => setStage(2), 1500),   // Logo fades in
-      setTimeout(() => setStage(3), 3000),   // "Build the Best You" fades in
-      setTimeout(() => setStage(4), 4500),   // Button appears
+      setTimeout(() => setStage(3), 2800),   // Headline fades in
+      setTimeout(() => setStage(4), 4000),   // Tagline fades in
+      setTimeout(() => setStage(5), 5000),   // Trust indicators + buttons
     ];
     
     return () => timers.forEach(clearTimeout);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#000000] relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
+      {/* Subtle grid background */}
+      <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(212, 165, 116, 0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212, 165, 116, 0.5) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px'
+        }}
+      />
 
-      {/* Stacked vertical layout - cinematic animation sequence */}
-      <div className="relative z-10 flex flex-col items-center justify-center gap-8 px-6">
+      {/* Radial glow */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(184, 115, 51, 0.08) 0%, transparent 60%)'
+        }}
+      />
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center justify-center gap-6 px-6 max-w-4xl mx-auto">
         
-        {/* ThriveMT Text Logo - Fades in together */}
+        {/* ThriveMT Text Logo */}
         <div className="relative flex items-baseline gap-0">
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: stage >= 1 ? 1 : 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold tracking-tight"
-            style={{ color: '#FFFFFF' }}
+            className="text-5xl md:text-7xl font-bold tracking-tight text-white"
           >
             Thrive
           </motion.span>
 
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: stage >= 1 ? 1 : 0,
-            }}
+            animate={{ opacity: stage >= 1 ? 1 : 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold tracking-tight mt-glow"
+            className="text-5xl md:text-7xl font-bold tracking-tight mt-glow"
             style={{
               background: 'linear-gradient(135deg, #B87333 0%, #D4A574 50%, #D4AF37 100%)',
               WebkitBackgroundClip: 'text',
@@ -55,14 +79,15 @@ const SiteEntry = () => {
           </motion.span>
         </div>
 
-        {/* Your Logo with Multiple Orbiting Dots and Light Trails - Stage 2 */}
+        {/* Logo with orbiting dots */}
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ 
             opacity: stage >= 2 ? 1 : 0,
+            scale: stage >= 2 ? 1 : 0.9,
           }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative w-[10rem] h-[10rem] md:w-[12rem] md:h-[12rem] logo-container"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative w-[9rem] h-[9rem] md:w-[11rem] md:h-[11rem] logo-container"
         >
           <img 
             src={headLogo}
@@ -70,7 +95,7 @@ const SiteEntry = () => {
             className="w-full h-full object-contain logo-tracer"
           />
           
-          {/* Multiple orbiting dots with light trails */}
+          {/* Orbiting dots */}
           <div className="orbit-dot dot-1"></div>
           <div className="orbit-dot dot-2"></div>
           <div className="orbit-dot dot-3"></div>
@@ -79,56 +104,100 @@ const SiteEntry = () => {
           <div className="orbit-dot dot-6"></div>
         </motion.div>
 
-        {/* "Build the Best You" Headline - Fades in at stage 3 */}
+        {/* Institutional Headline */}
         <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: stage >= 3 ? 1 : 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="text-4xl md:text-5xl font-bold text-center leading-tight whitespace-nowrap px-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: stage >= 3 ? 1 : 0, y: stage >= 3 ? 0 : 10 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-2xl md:text-4xl font-bold text-center leading-tight tracking-tight"
           style={{
-            background: 'linear-gradient(135deg, #FFFFFF 0%, #E8D4C0 30%, #D4A574 60%, #B87333 100%)',
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #E8D4C0 40%, #D4A574 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
           }}
         >
-          Build the Best You
+          Institutional Mental Health Infrastructure
         </motion.h1>
 
-        {/* ENTER Button with Light Sweep - Fades in at stage 4 */}
-        <motion.div
+        {/* Tagline */}
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: stage >= 4 ? 1 : 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-lg md:text-xl text-white/60 font-medium tracking-wide text-center"
+        >
+          Scalable. Compliant. Measurable.
+        </motion.p>
+
+        {/* Trust Indicators */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: stage >= 5 ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-2"
+        >
+          {trustIndicators.map((item, idx) => (
+            <div 
+              key={idx} 
+              className="flex items-center gap-2 text-white/40 text-sm"
+            >
+              <item.icon className="w-4 h-4 text-bronze-500" />
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: stage >= 5 ? 1 : 0, y: stage >= 5 ? 0 : 10 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          className="flex flex-col sm:flex-row items-center gap-4 mt-4"
         >
           <Button
-            size="xl"
+            size="lg"
             onClick={() => navigate("/home")}
-            className="relative overflow-hidden text-black font-bold text-xl px-20 py-8 rounded-lg"
+            className="relative overflow-hidden text-black font-semibold text-base px-10 py-6 rounded-lg min-w-[180px]"
             style={{
               background: 'linear-gradient(90deg, #B87333 0%, #D4A574 15%, #FFFFFF 40%, #FFFFFF 60%, #D4A574 85%, #B87333 100%)',
               backgroundSize: '300% 100%',
               animation: 'light-sweep 8s ease-in-out infinite',
             }}
           >
-            ENTER
+            Explore Platform
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => window.open("https://calendly.com/thrivemt/demo", "_blank")}
+            className="text-bronze-400 border-bronze-500/30 hover:bg-bronze-500/10 hover:border-bronze-500/50 font-medium text-base px-10 py-6 rounded-lg min-w-[180px]"
+          >
+            Request Demo
           </Button>
         </motion.div>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: stage >= 5 ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+          className="text-sm text-white/30 text-center mt-2 max-w-md"
+        >
+          Partner with ThriveMT to deliver 3-layer mental health support across your organization
+        </motion.p>
       </div>
 
       {/* CSS Animations */}
       <style>{`
         @keyframes light-sweep {
-          0% {
-            background-position: -200% center;
-          }
-          100% {
-            background-position: 200% center;
-          }
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
         }
 
         .mt-glow {
-          animation: mt-glow-pulse 2s ease-in-out infinite;
+          animation: mt-glow-pulse 2.5s ease-in-out infinite;
         }
 
         @keyframes mt-glow-pulse {
@@ -138,23 +207,22 @@ const SiteEntry = () => {
           }
           50% { 
             text-shadow: 0 0 40px #D4AF37, 0 0 80px #D4A574, 0 0 120px #B87333;
-            filter: brightness(1.2);
+            filter: brightness(1.15);
           }
         }
 
         .logo-tracer {
-          filter: drop-shadow(0 0 15px rgba(212, 165, 116, 0.4));
+          filter: drop-shadow(0 0 12px rgba(212, 165, 116, 0.35));
         }
 
         .logo-container {
           position: relative;
         }
 
-        /* Orbiting dots with light trails */
         .orbit-dot {
           position: absolute;
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
           top: 50%;
           left: 50%;
@@ -164,20 +232,19 @@ const SiteEntry = () => {
         .orbit-dot::after {
           content: '';
           position: absolute;
-          width: 30px;
-          height: 4px;
+          width: 24px;
+          height: 3px;
           border-radius: 50%;
           top: 50%;
           left: 50%;
           transform: translateY(-50%);
-          filter: blur(3px);
-          opacity: 0.6;
+          filter: blur(2px);
+          opacity: 0.5;
         }
 
-        /* Dot 1 - White, outer ring, clockwise */
         .dot-1 {
           background: #FFFFFF;
-          box-shadow: 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF;
+          box-shadow: 0 0 8px #FFFFFF, 0 0 16px #FFFFFF;
           animation: orbit-1 6s linear infinite;
         }
         .dot-1::after {
@@ -185,10 +252,9 @@ const SiteEntry = () => {
           animation: trail-rotate-1 6s linear infinite;
         }
 
-        /* Dot 2 - Bronze, outer ring, counter-clockwise */
         .dot-2 {
           background: #B87333;
-          box-shadow: 0 0 10px #B87333, 0 0 20px #D4A574, 0 0 30px #B87333;
+          box-shadow: 0 0 8px #B87333, 0 0 16px #D4A574;
           animation: orbit-2 6s linear infinite;
         }
         .dot-2::after {
@@ -196,10 +262,9 @@ const SiteEntry = () => {
           animation: trail-rotate-2 6s linear infinite;
         }
 
-        /* Dot 3 - Gold, middle ring, clockwise */
         .dot-3 {
           background: #D4AF37;
-          box-shadow: 0 0 8px #D4AF37, 0 0 16px #D4AF37;
+          box-shadow: 0 0 6px #D4AF37, 0 0 12px #D4AF37;
           animation: orbit-3 8s linear infinite;
         }
         .dot-3::after {
@@ -207,10 +272,9 @@ const SiteEntry = () => {
           animation: trail-rotate-3 8s linear infinite;
         }
 
-        /* Dot 4 - White, middle ring, counter-clockwise */
         .dot-4 {
           background: #E8D4C0;
-          box-shadow: 0 0 8px #E8D4C0, 0 0 16px #FFFFFF;
+          box-shadow: 0 0 6px #E8D4C0, 0 0 12px #FFFFFF;
           animation: orbit-4 8s linear infinite;
         }
         .dot-4::after {
@@ -218,10 +282,9 @@ const SiteEntry = () => {
           animation: trail-rotate-4 8s linear infinite;
         }
 
-        /* Dot 5 - Bronze, inner ring, fast clockwise */
         .dot-5 {
           background: #D4A574;
-          box-shadow: 0 0 6px #D4A574, 0 0 12px #B87333;
+          box-shadow: 0 0 5px #D4A574, 0 0 10px #B87333;
           animation: orbit-5 4s linear infinite;
         }
         .dot-5::after {
@@ -229,10 +292,9 @@ const SiteEntry = () => {
           animation: trail-rotate-5 4s linear infinite;
         }
 
-        /* Dot 6 - White, inner ring, fast counter-clockwise */
         .dot-6 {
           background: #FFFFFF;
-          box-shadow: 0 0 6px #FFFFFF, 0 0 12px #E8D4C0;
+          box-shadow: 0 0 5px #FFFFFF, 0 0 10px #E8D4C0;
           animation: orbit-6 4s linear infinite;
         }
         .dot-6::after {
@@ -240,10 +302,9 @@ const SiteEntry = () => {
           animation: trail-rotate-6 4s linear infinite;
         }
 
-        /* Outer ring orbits - radius 120px */
         @keyframes orbit-1 {
-          0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-          100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+          0% { transform: rotate(0deg) translateX(85px) rotate(0deg); }
+          100% { transform: rotate(360deg) translateX(85px) rotate(-360deg); }
         }
         @keyframes trail-rotate-1 {
           0% { transform: translateY(-50%) rotate(180deg); }
@@ -251,18 +312,17 @@ const SiteEntry = () => {
         }
 
         @keyframes orbit-2 {
-          0% { transform: rotate(180deg) translateX(100px) rotate(-180deg); }
-          100% { transform: rotate(-180deg) translateX(100px) rotate(180deg); }
+          0% { transform: rotate(180deg) translateX(85px) rotate(-180deg); }
+          100% { transform: rotate(-180deg) translateX(85px) rotate(180deg); }
         }
         @keyframes trail-rotate-2 {
           0% { transform: translateY(-50%) rotate(0deg); }
           100% { transform: translateY(-50%) rotate(360deg); }
         }
 
-        /* Middle ring orbits - radius 80px */
         @keyframes orbit-3 {
-          0% { transform: rotate(90deg) translateX(75px) rotate(-90deg); }
-          100% { transform: rotate(450deg) translateX(75px) rotate(-450deg); }
+          0% { transform: rotate(90deg) translateX(65px) rotate(-90deg); }
+          100% { transform: rotate(450deg) translateX(65px) rotate(-450deg); }
         }
         @keyframes trail-rotate-3 {
           0% { transform: translateY(-50%) rotate(180deg); }
@@ -270,18 +330,17 @@ const SiteEntry = () => {
         }
 
         @keyframes orbit-4 {
-          0% { transform: rotate(270deg) translateX(75px) rotate(-270deg); }
-          100% { transform: rotate(-90deg) translateX(75px) rotate(90deg); }
+          0% { transform: rotate(270deg) translateX(65px) rotate(-270deg); }
+          100% { transform: rotate(-90deg) translateX(65px) rotate(90deg); }
         }
         @keyframes trail-rotate-4 {
           0% { transform: translateY(-50%) rotate(0deg); }
           100% { transform: translateY(-50%) rotate(360deg); }
         }
 
-        /* Inner ring orbits - radius 55px */
         @keyframes orbit-5 {
-          0% { transform: rotate(45deg) translateX(55px) rotate(-45deg); }
-          100% { transform: rotate(405deg) translateX(55px) rotate(-405deg); }
+          0% { transform: rotate(45deg) translateX(48px) rotate(-45deg); }
+          100% { transform: rotate(405deg) translateX(48px) rotate(-405deg); }
         }
         @keyframes trail-rotate-5 {
           0% { transform: translateY(-50%) rotate(180deg); }
@@ -289,8 +348,8 @@ const SiteEntry = () => {
         }
 
         @keyframes orbit-6 {
-          0% { transform: rotate(225deg) translateX(55px) rotate(-225deg); }
-          100% { transform: rotate(-135deg) translateX(55px) rotate(135deg); }
+          0% { transform: rotate(225deg) translateX(48px) rotate(-225deg); }
+          100% { transform: rotate(-135deg) translateX(48px) rotate(135deg); }
         }
         @keyframes trail-rotate-6 {
           0% { transform: translateY(-50%) rotate(0deg); }
