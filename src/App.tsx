@@ -20,6 +20,7 @@ import SiteWhatWeOffer from "@/pages/site/SiteWhatWeOffer";
 import SitePrivacyPolicy from "@/pages/site/SitePrivacyPolicy";
 import SiteTermsOfService from "@/pages/site/SiteTermsOfService";
 import SiteHIPAANotice from "@/pages/site/SiteHIPAANotice";
+import OGImageGenerator from "@/pages/admin/OGImageGenerator";
 import { Toaster } from "@/components/ui/toaster";
 import "./App.css";
 
@@ -51,6 +52,9 @@ function App() {
               <Route path="/terms" element={<SiteTermsOfService />} />
               <Route path="/hipaa" element={<SiteHIPAANotice />} />
             </Route>
+
+            {/* Admin Routes */}
+            <Route path="/admin/og-generator" element={<OGImageGenerator />} />
 
             {/* Redirect any /app/* routes to thrive-mental.app */}
             <Route path="/app/*" element={<RedirectToApp />} />

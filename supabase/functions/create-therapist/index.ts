@@ -139,8 +139,8 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message,
-        details: error.toString()
+        error: error instanceof Error ? error.message : 'Unknown error',
+        details: error instanceof Error ? error.toString() : String(error)
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
