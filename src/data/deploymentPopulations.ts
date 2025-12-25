@@ -20,12 +20,19 @@ export interface Statistic {
   context: string;
 }
 
+export interface PortalScreenshots {
+  welcome: string;
+  features: string;
+  dashboard: string;
+}
+
 export interface DeploymentPopulation {
   id: string;
   name: string;
   icon: typeof Shield;
   headline: string;
   image: string;
+  portalScreenshots: PortalScreenshots;
   statistics: Statistic[];
   industryOverview: string;
   valueProposition: string;
@@ -43,6 +50,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Shield,
     headline: "Mental health infrastructure for those who serve and have served.",
     image: "https://images.unsplash.com/photo-1579912437766-7896df6d3cd3?w=800&q=80",
+    portalScreenshots: {
+      welcome: "/portal-screenshots/military/welcome.jpeg",
+      features: "/portal-screenshots/military/features.jpeg",
+      dashboard: "/portal-screenshots/military/dashboard.jpeg",
+    },
     statistics: [
       { value: "17", suffix: "/day", context: "Average veteran suicides daily in the U.S." },
       { value: "50", suffix: "%", context: "Veterans needing care who don't receive it" },
@@ -80,6 +92,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: GraduationCap,
     headline: "Supporting student mental health at institutional scale.",
     image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "41", suffix: "%", context: "College students with depression or anxiety" },
       { value: "3x", context: "Increase in counseling demand since 2010" },
@@ -112,6 +129,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Briefcase,
     headline: "Enterprise-grade mental health without enterprise complexity.",
     image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "$500B", context: "Annual U.S. cost of workplace mental health issues" },
       { value: "76", suffix: "%", context: "Workers reporting burnout symptoms" },
@@ -143,6 +165,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Siren,
     headline: "Shift-friendly support for high-trauma roles.",
     image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "30", suffix: "%", context: "First responders with PTSD symptoms" },
       { value: "2x", context: "Suicide rate compared to general population" },
@@ -174,6 +201,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: UtensilsCrossed,
     headline: "Mental health access for high-pressure, people-facing environments.",
     image: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "84", suffix: "%", context: "Hospitality workers reporting high stress" },
       { value: "73", suffix: "%", context: "Industry turnover rate" },
@@ -205,6 +237,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Truck,
     headline: "Support for safety-critical, mobile, and isolated workers.",
     image: "https://images.unsplash.com/photo-1576267423048-15c0040fec78?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "27", suffix: "%", context: "Truckers with clinical depression" },
       { value: "13", suffix: "%", context: "Reporting substance abuse issues" },
@@ -236,6 +273,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: BookOpen,
     headline: "Sustaining those who sustain others.",
     image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "78", suffix: "%", context: "Teachers reporting frequent burnout" },
       { value: "50", suffix: "%", context: "Who leave within first 5 years" },
@@ -267,6 +309,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: BadgeCheck,
     headline: "Mental health support designed for trust and confidentiality.",
     image: "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "4x", context: "Suicide rate compared to line-of-duty deaths" },
       { value: "90", suffix: "%", context: "Don't seek help due to stigma/career fear" },
@@ -298,6 +345,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Heart,
     headline: "Emotional and psychological support alongside medical care.",
     image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "40", suffix: "%", context: "Cancer patients with anxiety or depression" },
       { value: "25", suffix: "%", context: "Caregivers experiencing burnout" },
@@ -329,6 +381,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Baby,
     headline: "Support for resilience under constant pressure.",
     image: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "38", suffix: "%", context: "Single parents with mental health concerns" },
       { value: "2x", context: "Stress levels compared to partnered parents" },
@@ -360,6 +417,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Sunset,
     headline: "Accessible mental health support for aging populations.",
     image: "https://images.unsplash.com/photo-1447710441604-5bdc41bc6517?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "20", suffix: "%", context: "Seniors experiencing depression" },
       { value: "60", suffix: "%", context: "Cases that go untreated" },
@@ -391,6 +453,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Activity,
     headline: "Mental health as a long-term companion to care.",
     image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "50", suffix: "%", context: "Chronic illness patients with depression" },
       { value: "3x", context: "Higher anxiety risk than general population" },
@@ -422,6 +489,11 @@ export const deploymentPopulations: DeploymentPopulation[] = [
     icon: Sparkles,
     headline: "Early mental health access during critical developmental years.",
     image: "https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&q=80",
+    portalScreenshots: {
+      welcome: "",
+      features: "",
+      dashboard: "",
+    },
     statistics: [
       { value: "1 in 5", context: "Adolescents with a mental health disorder" },
       { value: "60", suffix: "%", context: "Youth who don't receive treatment" },
