@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { deploymentPopulations, DeploymentPopulation } from "@/data/deploymentPopulations";
-import { cn } from "@/lib/utils";
-import { Check, ArrowRight, Image as ImageIcon } from "lucide-react";
+import { DeploymentPopulation } from "@/data/deploymentPopulations";
+import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDeployment } from "@/contexts/DeploymentContext";
+import PortalPreviewRenderer from "./PortalPreviewRenderer";
 
 const StatCard = ({ stat }: { stat: { value: string; suffix?: string; context: string } }) => (
   <div className="bg-gradient-to-br from-bronze-500/10 to-bronze-600/5 border border-bronze-500/20 rounded-xl p-4 text-center">
@@ -15,90 +14,6 @@ const StatCard = ({ stat }: { stat: { value: string; suffix?: string; context: s
     <p className="text-xs md:text-sm text-muted-foreground mt-1 leading-tight">{stat.context}</p>
   </div>
 );
-
-const ScreenshotGallery = ({ screenshots, populationName }: { screenshots: DeploymentPopulation['portalScreenshots']; populationName: string }) => {
-  const [activeTab, setActiveTab] = useState<'welcome' | 'features' | 'dashboard'>('welcome');
-  
-  const tabs = [
-    { key: 'welcome' as const, label: 'Welcome Screen' },
-    { key: 'features' as const, label: 'Features' },
-    { key: 'dashboard' as const, label: 'Dashboard' },
-  ];
-  
-  const hasScreenshots = screenshots.welcome || screenshots.features || screenshots.dashboard;
-  
-  if (!hasScreenshots) {
-    // Placeholder state
-    return (
-      <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-bronze-500/5 to-bronze-600/10 border border-bronze-500/20">
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8">
-          <div className="w-16 h-16 rounded-full bg-bronze-500/10 flex items-center justify-center">
-            <ImageIcon className="w-8 h-8 text-bronze-400/60" />
-          </div>
-          <div className="text-center">
-            <h4 className="text-lg font-semibold text-foreground/70">Portal Screenshots Coming Soon</h4>
-            <p className="text-sm text-muted-foreground mt-1 max-w-md">
-              Screenshots of the {populationName} portal will be added here to showcase the Welcome Screen, Features, and Dashboard.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  const currentImage = screenshots[activeTab];
-  
-  return (
-    <div className="space-y-4">
-      {/* Tab Navigation */}
-      <div className="flex gap-2 overflow-x-auto pb-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={cn(
-              "px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all",
-              activeTab === tab.key
-                ? "bg-bronze-500 text-white shadow-md"
-                : "bg-card/50 text-muted-foreground hover:bg-card hover:text-foreground border border-border/50"
-            )}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      
-      {/* Screenshot Display */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-          className="relative w-full rounded-xl overflow-hidden border border-border/50 bg-black/5"
-        >
-          {currentImage ? (
-            <img 
-              src={currentImage} 
-              alt={`${populationName} ${activeTab} screen`}
-              className="w-full h-auto object-contain"
-            />
-          ) : (
-            <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-bronze-500/5 to-bronze-600/10">
-              <div className="text-center p-8">
-                <ImageIcon className="w-12 h-12 text-bronze-400/40 mx-auto mb-3" />
-                <p className="text-sm text-muted-foreground">
-                  {tabs.find(t => t.key === activeTab)?.label} screenshot pending
-                </p>
-              </div>
-            </div>
-          )}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-};
 
 const PopulationContent = ({ population }: { population: DeploymentPopulation }) => (
   <div className="space-y-8">
@@ -117,12 +32,12 @@ const PopulationContent = ({ population }: { population: DeploymentPopulation })
       </div>
     </div>
 
-    {/* Portal Screenshots Gallery */}
+    {/* Live Portal Preview */}
     <div>
       <h4 className="text-sm font-bold text-bronze-400 uppercase tracking-wider mb-4">
         Portal Experience
       </h4>
-      <ScreenshotGallery screenshots={population.portalScreenshots} populationName={population.name} />
+      <PortalPreviewRenderer populationId={population.id} populationName={population.name} />
     </div>
 
     {/* Statistics Grid */}
