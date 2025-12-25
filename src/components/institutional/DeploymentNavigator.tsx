@@ -17,18 +17,28 @@ const StatCard = ({ stat }: { stat: { value: string; suffix?: string; context: s
 
 const PopulationContent = ({ population }: { population: DeploymentPopulation }) => (
   <div className="space-y-8">
-    {/* Header */}
-    <div className="flex items-start gap-4">
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-bronze-500/20 to-bronze-600/10 flex items-center justify-center flex-shrink-0">
-        <population.icon className="w-7 h-7 text-bronze-400" />
-      </div>
-      <div>
-        <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-          {population.name}
-        </h3>
-        <p className="text-muted-foreground text-base md:text-lg">
-          {population.headline}
-        </p>
+    {/* Hero Image */}
+    <div className="relative w-full aspect-video rounded-xl overflow-hidden group">
+      <img 
+        src={population.image} 
+        alt={population.name}
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+      <div className="absolute bottom-4 left-4 right-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-lg bg-bronze-500/30 backdrop-blur-sm flex items-center justify-center">
+            <population.icon className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-white">
+              {population.name}
+            </h3>
+            <p className="text-white/80 text-sm md:text-base">
+              {population.headline}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
