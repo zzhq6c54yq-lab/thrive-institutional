@@ -7,8 +7,12 @@ import { Users, ArrowRight, Heart, Star, Smile } from "lucide-react";
 import ThriveButton from "@/components/navigation/ThriveButton";
 import PortalBackButton from "@/components/navigation/PortalBackButton";
 
-const AdolescentWelcome: React.FC = () => {
-  const [screenState, setScreenState] = useState<'welcome' | 'what-to-expect'>('welcome');
+interface AdolescentWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const AdolescentWelcome: React.FC<AdolescentWelcomeProps> = ({ initialState = 'welcome' }) => {
+  const [screenState, setScreenState] = useState<'welcome' | 'what-to-expect'>(initialState);
   const navigate = useNavigate();
   const { toast } = useToast();
 

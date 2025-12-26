@@ -6,8 +6,12 @@ import { GraduationCap, BookOpen, Users, Brain, Heart, ArrowRight, Sparkles } fr
 import { useToast } from "@/hooks/use-toast";
 import HomeButton from "@/components/HomeButton";
 
-const CollegeWelcome: React.FC = () => {
-  const [screenState, setScreenState] = React.useState<'welcome' | 'what-to-expect'>('welcome');
+interface CollegeWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const CollegeWelcome: React.FC<CollegeWelcomeProps> = ({ initialState = 'welcome' }) => {
+  const [screenState, setScreenState] = React.useState<'welcome' | 'what-to-expect'>(initialState);
   const navigate = useNavigate();
   const { toast } = useToast();
 

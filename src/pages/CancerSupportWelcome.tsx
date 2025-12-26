@@ -5,7 +5,11 @@ import { Heart, Users, BookHeart, Calendar, MessageCircle, StarHalf } from "luci
 import { useToast } from "@/hooks/use-toast";
 import SpecializedProgramWelcome from "@/components/specialized-programs/SpecializedProgramWelcome";
 
-const CancerSupportWelcome: React.FC = () => {
+interface CancerSupportWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const CancerSupportWelcome: React.FC<CancerSupportWelcomeProps> = ({ initialState = 'welcome' }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -45,6 +49,7 @@ const CancerSupportWelcome: React.FC = () => {
       icon={<Heart className="h-8 w-8 text-purple-500" />}
       coverImage="/lovable-uploads/f3c84972-8f58-42d7-b86f-82ff2d823b30.png"
       motivationalMessage={motivationalMessage}
+      initialState={initialState}
     />
   );
 };

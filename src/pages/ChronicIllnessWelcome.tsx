@@ -9,7 +9,11 @@ import SpecializedProgramWelcome from "@/components/specialized-programs/Special
 import NavigationBar from "@/components/navigation/NavigationBar";
 import { useToast } from "@/hooks/use-toast";
 
-const ChronicIllnessWelcome: React.FC = () => {
+interface ChronicIllnessWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const ChronicIllnessWelcome: React.FC<ChronicIllnessWelcomeProps> = ({ initialState = 'welcome' }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -91,6 +95,7 @@ const ChronicIllnessWelcome: React.FC = () => {
           icon={<Stethoscope className="h-12 w-12 text-white" />}
           coverImage="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1280&q=80"
           motivationalMessage="Your chronic condition may be part of your life's journey, but it doesn't define who you are. With the right support and tools, you can thrive despite the challenges."
+          initialState={initialState}
         />
         
         <motion.div 

@@ -3,7 +3,11 @@ import React from "react";
 import { Shield } from "lucide-react";
 import SpecializedProgramWelcome from "@/components/specialized-programs/SpecializedProgramWelcome";
 
-const LawEnforcementWelcome = () => {
+interface LawEnforcementWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const LawEnforcementWelcome: React.FC<LawEnforcementWelcomeProps> = ({ initialState = 'welcome' }) => {
   const whatToExpect = [
     "Access to law enforcement-specific mental health resources and tools",
     "Confidential peer support networks with fellow officers",
@@ -25,6 +29,7 @@ const LawEnforcementWelcome = () => {
       portalPath="/law-enforcement-portal"
       icon={<Shield className="w-12 h-12 text-white" />}
       coverImage="/lovable-uploads/f3c84972-8f58-42d7-b86f-82ff2d823b30.png"
+      initialState={initialState}
     />
   );
 };

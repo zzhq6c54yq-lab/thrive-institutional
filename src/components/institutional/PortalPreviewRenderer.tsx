@@ -33,7 +33,7 @@ const AdolescentPortal = React.lazy(() => import("@/pages/AdolescentPortal"));
 
 // Map population IDs to their components
 const portalComponentMap: Record<string, {
-  welcome: React.LazyExoticComponent<React.FC<any>>;
+  welcome: React.LazyExoticComponent<React.FC<{ initialState?: 'welcome' | 'what-to-expect' }>>;
   portal: React.LazyExoticComponent<React.FC<any>>;
 }> = {
   "military-veterans": { welcome: DoDWelcome, portal: DoDPortal },
@@ -125,12 +125,19 @@ const PortalPreviewRenderer: React.FC<PortalPreviewRendererProps> = ({
     const WelcomeComponent = components.welcome;
     const PortalComponent = components.portal;
     
-    // For welcome and features, we render the Welcome component
+    // For welcome tab, show initial welcome screen
+    // For features tab, show the what-to-expect screen
     // For dashboard, we render the Portal component
-    if (activeTab === 'welcome' || activeTab === 'features') {
+    if (activeTab === 'welcome') {
       return (
         <Suspense fallback={<LoadingPlaceholder />}>
-          <WelcomeComponent />
+          <WelcomeComponent initialState="welcome" />
+        </Suspense>
+      );
+    } else if (activeTab === 'features') {
+      return (
+        <Suspense fallback={<LoadingPlaceholder />}>
+          <WelcomeComponent initialState="what-to-expect" />
         </Suspense>
       );
     } else {
@@ -149,7 +156,12 @@ const PortalPreviewRenderer: React.FC<PortalPreviewRendererProps> = ({
         {tabs.map((tab) => (
           <button
             key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setActiveTab(tab.key);
+            }}
             className={cn(
               "px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2",
               activeTab === tab.key

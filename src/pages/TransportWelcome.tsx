@@ -3,7 +3,11 @@ import React from "react";
 import SpecializedProgramWelcome from "@/components/specialized-programs/SpecializedProgramWelcome";
 import { Truck } from "lucide-react";
 
-const TransportWelcome: React.FC = () => {
+interface TransportWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const TransportWelcome: React.FC<TransportWelcomeProps> = ({ initialState = 'welcome' }) => {
   return (
     <SpecializedProgramWelcome
       title="Transport Industry Wellness"
@@ -25,6 +29,7 @@ const TransportWelcome: React.FC = () => {
       icon={<Truck className="h-12 w-12 text-white" />}
       coverImage="https://images.unsplash.com/photo-1576267423048-15c0040fec78?auto=format&fit=crop&w=1280&q=80"
       motivationalMessage="Your role in keeping our world connected through transportation is essential. While you focus on delivering for others, this program is designed to help you prioritize your own mental wellbeing on the journey."
+      initialState={initialState}
     />
   );
 };
