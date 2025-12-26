@@ -6,8 +6,12 @@ import { Briefcase, TrendingUp, LineChart, ShieldCheck, Building, ArrowRight, Za
 import { useToast } from "@/hooks/use-toast";
 import HomeButton from "@/components/HomeButton";
 
-const SmallBusinessWelcome: React.FC = () => {
-  const [screenState, setScreenState] = React.useState<'welcome' | 'what-to-expect'>('welcome');
+interface SmallBusinessWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const SmallBusinessWelcome: React.FC<SmallBusinessWelcomeProps> = ({ initialState = 'welcome' }) => {
+  const [screenState, setScreenState] = React.useState<'welcome' | 'what-to-expect'>(initialState);
   const navigate = useNavigate();
   const { toast } = useToast();
 

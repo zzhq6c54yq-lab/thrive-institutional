@@ -6,7 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import HomeButton from "@/components/HomeButton";
 
-const FirstRespondersWelcome = () => {
+interface FirstRespondersWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const FirstRespondersWelcome: React.FC<FirstRespondersWelcomeProps> = ({ initialState = 'welcome' }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 

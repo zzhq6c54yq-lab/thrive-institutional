@@ -6,8 +6,12 @@ import { Shield, Star, Flag, Medal, Heart, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import HomeButton from "@/components/HomeButton";
 
-const DoDWelcome: React.FC = () => {
-  const [screenState, setScreenState] = React.useState<'welcome' | 'what-to-expect'>('welcome');
+interface DoDWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const DoDWelcome: React.FC<DoDWelcomeProps> = ({ initialState = 'welcome' }) => {
+  const [screenState, setScreenState] = React.useState<'welcome' | 'what-to-expect'>(initialState);
   const navigate = useNavigate();
   const { toast } = useToast();
 

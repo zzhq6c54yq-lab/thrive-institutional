@@ -6,8 +6,12 @@ import { Sparkles, ArrowRight, BookOpen, Heart, Users } from "lucide-react";
 import ThriveButton from "@/components/navigation/ThriveButton";
 import PortalBackButton from "@/components/navigation/PortalBackButton";
 
-const GoldenYearsWelcome: React.FC = () => {
-  const [screenState, setScreenState] = useState<'welcome' | 'what-to-expect'>('welcome');
+interface GoldenYearsWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const GoldenYearsWelcome: React.FC<GoldenYearsWelcomeProps> = ({ initialState = 'welcome' }) => {
+  const [screenState, setScreenState] = useState<'welcome' | 'what-to-expect'>(initialState);
   const navigate = useNavigate();
   const { toast } = useToast();
 

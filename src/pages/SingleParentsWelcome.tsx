@@ -2,7 +2,11 @@ import React from "react";
 import SpecializedProgramWelcome from "@/components/specialized-programs/SpecializedProgramWelcome";
 import { Heart } from "lucide-react";
 
-const SingleParentsWelcome: React.FC = () => {
+interface SingleParentsWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const SingleParentsWelcome: React.FC<SingleParentsWelcomeProps> = ({ initialState = 'welcome' }) => {
   return (
     <SpecializedProgramWelcome
       title="Single Parent Wellness Portal"
@@ -25,6 +29,7 @@ const SingleParentsWelcome: React.FC = () => {
       icon={Heart as any}
       coverImage="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=1200&q=80"
       motivationalMessage="You're doing an incredible job. This portal is here to support you every step of the way."
+      initialState={initialState}
     />
   );
 };

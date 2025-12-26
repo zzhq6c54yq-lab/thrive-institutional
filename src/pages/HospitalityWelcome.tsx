@@ -3,7 +3,11 @@ import React from "react";
 import SpecializedProgramWelcome from "@/components/specialized-programs/SpecializedProgramWelcome";
 import { UtensilsCrossed } from "lucide-react";
 
-const HospitalityWelcome: React.FC = () => {
+interface HospitalityWelcomeProps {
+  initialState?: 'welcome' | 'what-to-expect';
+}
+
+const HospitalityWelcome: React.FC<HospitalityWelcomeProps> = ({ initialState = 'welcome' }) => {
   return (
     <SpecializedProgramWelcome
       title="Hospitality Industry Wellness"
@@ -25,6 +29,7 @@ const HospitalityWelcome: React.FC = () => {
       icon={<UtensilsCrossed className="h-12 w-12 text-white" />}
       coverImage="https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&w=1280&q=80"
       motivationalMessage="Your role in the hospitality industry brings joy, comfort, and memorable experiences to others. Now it's time to prioritize your own wellbeing with the same dedication you bring to serving others."
+      initialState={initialState}
     />
   );
 };

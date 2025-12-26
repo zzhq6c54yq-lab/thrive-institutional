@@ -18,6 +18,7 @@ interface WelcomeScreenProps {
   icon: React.ReactNode;
   coverImage?: string;
   motivationalMessage?: string; // Added motivational message prop
+  initialState?: 'welcome' | 'what-to-expect';
 }
 
 const SpecializedProgramWelcome: React.FC<WelcomeScreenProps> = ({
@@ -31,9 +32,10 @@ const SpecializedProgramWelcome: React.FC<WelcomeScreenProps> = ({
   portalPath,
   icon,
   coverImage,
-  motivationalMessage
+  motivationalMessage,
+  initialState = 'welcome'
 }) => {
-  const [screenState, setScreenState] = useState<'welcome' | 'what-to-expect'>('welcome');
+  const [screenState, setScreenState] = useState<'welcome' | 'what-to-expect'>(initialState);
   const navigate = useNavigate();
   const { toast } = useToast();
 
